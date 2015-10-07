@@ -3,6 +3,7 @@ package pieterdezwart.java2dgame.controller;
 import pieterdezwart.java2dgame.model.Ball;
 import pieterdezwart.java2dgame.view.View;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Game implements Runnable {
     private View view;
+    private InputContainer inputContainer;
 
     public static final int PWIDTH  = 800;	// game window width
     public static final int PHEIGHT = 600;	// game window height
@@ -27,6 +29,8 @@ public class Game implements Runnable {
 
         view = new View(unitList);
 
+        inputContainer = new InputContainer(view);
+
         startGame();
     }
 
@@ -39,11 +43,6 @@ public class Game implements Runnable {
         }
     }
 
-    public void start() {
-        new Thread(this).start();
-    }
-
-
     @Override
     public void run()
     {
@@ -51,6 +50,7 @@ public class Game implements Runnable {
 
         // game loop
         while ( running ) {
+            processInput();
             update();
 
             view.render();  // render the screen
@@ -69,6 +69,28 @@ public class Game implements Runnable {
         for(Ball ball : unitList)
         {
            ball.move();
+        }
+    }
+
+    // process all the mouse input events
+    private void processInput() {
+
+        if( inputContainer.getMouseEvent() != null) {
+            // gets last mouse input from inputContainer
+            MouseEvent e = inputContainer.getMouseEvent();
+
+            System.out.println("Clicked at: x:" + e.getX() + " y:" + e.getY());
+
+            inputContainer.clearMouseEvent(); // clear the input
+
+            for(Ball ball : unitList)
+            {
+                if (ball.hit(e.getX(), e.getY())) {   // was mouse press near the head?
+                    //gameOver = true;
+                    // hack together a score
+                    System.out.println("Hit!");
+                }
+            }
         }
     }
 }
