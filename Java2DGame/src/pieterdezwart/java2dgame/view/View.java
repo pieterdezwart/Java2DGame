@@ -2,6 +2,10 @@ package pieterdezwart.java2dgame.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
+import pieterdezwart.java2dgame.controller.Game;
+import pieterdezwart.java2dgame.model.Ball;
 
 /**
  * Created by Pieter on 7-10-2015.
@@ -9,14 +13,14 @@ import java.awt.*;
 public class View extends JFrame {
     private GamePanel gamePanel;
 
-    public View(int PWIDTH, int PHEIGHT)
+    public View(ArrayList<Ball> unitList)
     {
         Container c = getContentPane();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit application when closed
         setLocationByPlatform(true); 				    // Position frame at platform preference
 
-        gamePanel = new GamePanel(PWIDTH, PHEIGHT);
+        gamePanel = new GamePanel();
         c.add(gamePanel);
 
         pack();

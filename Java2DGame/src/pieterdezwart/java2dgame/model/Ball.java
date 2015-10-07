@@ -2,6 +2,8 @@ package pieterdezwart.java2dgame.model;
 
 import java.awt.*;
 
+import pieterdezwart.java2dgame.controller.Game;
+
 /**
  * Created by Pieter on 7-10-2015.
  */
@@ -16,10 +18,10 @@ public class Ball {
     private float ballSpeedY = 2;
 
 
-    public Ball(int pW, int pH)
+    public Ball()
     {
-        pWidth = pW;
-        pHeight = pH;
+        pWidth = Game.PWIDTH;
+        pHeight = Game.PHEIGHT;
     }
 
     public boolean hit(int x, int y)
@@ -71,4 +73,9 @@ public class Ball {
 
     public float getY()
     { return ballY; }
+
+    public float getRadius()
+    {
+        return ballRadius;
+    }
 }

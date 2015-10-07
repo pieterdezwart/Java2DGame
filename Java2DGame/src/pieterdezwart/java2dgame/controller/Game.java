@@ -11,15 +11,38 @@ import java.util.ArrayList;
 public class Game implements Runnable {
     private View view;
 
-    public final int PWIDTH = 800;	// game window width
-    public final int PHEIGHT = 600;	// game window height
+    public static final int PWIDTH  = 800;	// game window width
+    public static final int PHEIGHT = 600;	// game window height
 
-    public ArrayList<Ball> unitList;    // temp ball list
+    private boolean running = false;
+    private Thread animator;
+
+    public static ArrayList<Ball> unitList;    // temp ball list
 
     public Game()
     {
-        view = new View(PWIDTH,PHEIGHT);
+        unitList = new ArrayList<Ball>();
+
+        unitList.add(new Ball());
+
+        view = new View(unitList);
+
+        startGame();
     }
+
+    // initialise and start the thread
+    private void startGame()
+    {
+        if (animator == null || !running) {
+            animator = new Thread(this);
+            animator.start();
+        }
+    }
+
+    public void start() {
+        new Thread(this).start();
+    }
+
 
     @Override
     public void run()
@@ -43,6 +66,9 @@ public class Game implements Runnable {
 
     public void update()
     {
-
+        for(Ball ball : unitList)
+        {
+           ball.move();
+        }
     }
 }

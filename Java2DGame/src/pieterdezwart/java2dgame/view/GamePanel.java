@@ -1,7 +1,13 @@
 package pieterdezwart.java2dgame.view;
 
+import pieterdezwart.java2dgame.model.Ball;
+
+import pieterdezwart.java2dgame.controller.Game;
+
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Pieter on 7-10-2015.
@@ -14,13 +20,11 @@ public class GamePanel extends JPanel {
     private Graphics dbg;
     private Image dbImage = null;
 
-    public GamePanel(int PWIDTH, int PHEIGHT)
-    {
-        this.width = PWIDTH;
-        this.height = PHEIGHT;
 
+    public GamePanel()
+    {
         setBackground(Color.cyan);
-        setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
+        setPreferredSize(new Dimension(Game.PWIDTH, Game.PHEIGHT));
 
         setFocusable(true);
         requestFocus();
@@ -31,13 +35,21 @@ public class GamePanel extends JPanel {
     public void render()
     {
         if (dbImage == null){ // create the buffer
-            dbImage = createImage(width, height);
+            dbImage = createImage(Game.PWIDTH, Game.PHEIGHT);
             if (dbImage == null) {
                 System.out.println("dbImage is null");
                 return;
             }
             else
                 dbg = dbImage.getGraphics( );
+        }
+
+        // clear the background
+        dbg.setColor(Color.cyan);
+        dbg.fillRect(0, 0, Game.PWIDTH, Game.PHEIGHT);
+
+        for(Ball ball : Game.unitList) {
+            drawBall(ball.getX(), ball.getY(), ball.getRadius());
         }
     }
 
@@ -54,6 +66,13 @@ public class GamePanel extends JPanel {
         }
         catch (Exception e)
         { System.out.println("Graphics context error: " + e);  }
+    }
+
+    public void drawBall(float ballX, float ballY, float ballRadius)
+    {
+        dbg.setColor(Color.RED);
+        dbg.fillOval((int) (ballX - ballRadius), (int) (ballY - ballRadius),
+                (int) (2 * ballRadius), (int) (2 * ballRadius));
     }
 
 }
