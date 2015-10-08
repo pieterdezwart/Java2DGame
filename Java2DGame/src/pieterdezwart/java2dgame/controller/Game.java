@@ -64,7 +64,7 @@ public class Game implements Runnable {
             double deltaTime = (currentTime - previousTime) / 1_000_000_000.0;
 
             processInput();
-            update(deltaTime);
+            update(deltaTime * 60);
 
             view.render();  // render the screen
 
@@ -88,7 +88,7 @@ public class Game implements Runnable {
         if(gameOver == false)
         {
             for (Ball ball : unitList) {
-                ball.move();
+                ball.move(deltaTime);
             }
 
             if (BULLETS == 0) {

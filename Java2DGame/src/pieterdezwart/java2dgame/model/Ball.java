@@ -46,7 +46,7 @@ public class Ball {
             return false;
     }
 
-    public void move()
+    public void move(double deltaTime)
     {
         // Calculate the ball's new position
         switch((int)random){
@@ -54,8 +54,8 @@ public class Ball {
                 //ballX += ballSpeedX;
                 //ballY += ballSpeedY;
             case 1:
-                ballX -= ballSpeedX;
-                ballY -= ballSpeedY;
+                ballX -= ballSpeedX * deltaTime;
+                ballY -= ballSpeedY * deltaTime;
         }
         //ballX += ballSpeedX;
         //ballY += ballSpeedY;
