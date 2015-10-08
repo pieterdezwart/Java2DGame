@@ -52,25 +52,38 @@ public class Game implements Runnable {
     @Override
     public void run()
     {
+        final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
+
+        double previousTime = System.nanoTime();
+
         boolean running = true;
 
         // game loop
         while ( running ) {
+            double currentTime = System.nanoTime();
+            double deltaTime = (currentTime - previousTime) / 1_000_000_000.0;
+
             processInput();
-            update();
+            update(deltaTime);
 
             view.render();  // render the screen
 
-            try {
-                Thread.sleep(20);
+            previousTime = currentTime;
+
+            double frameTime = (System.nanoTime() - currentTime) / 1_000_000_000.0;
+            if (frameTime < targetDelta) {
+                /* wait targetDelta - frameTime seconds */
+                try {
+                    Thread.sleep((long)(targetDelta - frameTime));
+                }
+                catch (Exception e) {}
             }
-            catch (Exception e) {}
         }
 
         System.exit(0);
     }
 
-    public void update()
+    public void update(double deltaTime)
     {
         if(gameOver == false)
         {
@@ -87,14 +100,16 @@ public class Game implements Runnable {
 
     public void stopGame()
     {
-        inputContainer.clearMouseEvent(); // clear the input
 
-        System.out.println("test");
+        inputContainer.clearMouseEvent(); // clear the input
 
         gameOver = false;
 
         SCORE = 0;
         BULLETS = 5;
+
+        unitList.clear();
+        unitList.add(new Ball());
     }
 
     // process all the mouse input events

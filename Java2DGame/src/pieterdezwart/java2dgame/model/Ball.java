@@ -12,18 +12,31 @@ public class Ball {
 
     // Ball's properties
     private float ballRadius = 20; // Ball's radius
-    private float ballX = ballRadius + 200; // Ball's center (x, y) start position
-    private float ballY = ballRadius + 200;
+    private float ballX; // Ball's center (x, y) start position
+    private float ballY;
     private float ballSpeedX = 3;   // Ball's speed for x and y
     private float ballSpeedY = 2;
+
+    private double random;
 
 
     public Ball()
     {
         pWidth = Game.PWIDTH;
         pHeight = Game.PHEIGHT;
+
+        // set random start position
+        ballX = (float)Math.random() * Game.PWIDTH;
+        ballY = (float)Math.random() * Game.PHEIGHT;
+
+        // set random first direction
+        random = Math.random() * 2;
+
+        System.out.println((int)random);
+
     }
 
+    // check for hit
     public boolean hit(int x, int y)
     {
         if( (Math.abs( ballX + ballRadius - x) <= 2*ballRadius) &&
@@ -36,8 +49,16 @@ public class Ball {
     public void move()
     {
         // Calculate the ball's new position
-        ballX += ballSpeedX;
-        ballY += ballSpeedY;
+        switch((int)random){
+            case 0:
+                //ballX += ballSpeedX;
+                //ballY += ballSpeedY;
+            case 1:
+                ballX -= ballSpeedX;
+                ballY -= ballSpeedY;
+        }
+        //ballX += ballSpeedX;
+        //ballY += ballSpeedY;
 
         // Check if the ball moves over the bounds
         // If so, adjust the position and speed.
