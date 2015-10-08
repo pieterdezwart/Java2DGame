@@ -32,4 +32,9 @@ public class View extends JFrame {
         gamePanel.render(); // render to a buffer
         gamePanel.paintScreen();  // paint from the buffer
     }
+
+    public void drawFinished()
+    {
+        gamePanel.drawFinished();
+    }
 }

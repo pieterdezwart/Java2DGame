@@ -55,10 +55,14 @@ public class GamePanel extends JPanel {
         dbg.setColor(Color.cyan);
         dbg.fillRect(0, 0, Game.PWIDTH, Game.PHEIGHT);
 
-        drawScore(Game.SCORE);
+        drawScore(Game.SCORE, Game.BULLETS);
 
         for(Ball ball : Game.unitList) {
             drawBall(ball.getX(), ball.getY(), ball.getRadius());
+        }
+
+        if(Game.gameOver == true) {
+            drawFinished();
         }
     }
 
@@ -84,13 +88,28 @@ public class GamePanel extends JPanel {
                 (int) (2 * ballRadius), (int) (2 * ballRadius));
     }
 
-    public void drawScore(int score)
+    public void drawScore(int score, int bullets)
     {
         dbg.setColor(Color.blue);
         dbg.setFont(font);
 
         dbg.drawString("Score: " + score, 20, 25);
+        dbg.drawString("Bullets: " + bullets, 20, 50);
         //dbg.drawString("Ball Position: " + ball.getX() + ", " + ball.getY(), 20, 50);
+    }
+
+    public void drawFinished()
+    {
+        dbg.setColor(Color.black);
+        dbg.fillRect(130,240,540,80);
+
+        String msg = "Game Over. Your Score: " + Game.SCORE + "  (Click to restart)";
+        // center the message
+        int x = (Game.PWIDTH - metrics.stringWidth(msg))/2;
+        int y = (Game.PHEIGHT - metrics.getHeight())/2;
+        dbg.setColor(Color.red);
+        dbg.setFont(font);
+        dbg.drawString(msg, x, y);
     }
 
 }
