@@ -20,9 +20,16 @@ public class GamePanel extends JPanel {
     private Graphics dbg;
     private Image dbImage = null;
 
+    private Font font;
+    private FontMetrics metrics;
+
 
     public GamePanel()
     {
+        // set up message font
+        font = new Font("SansSerif", Font.BOLD, 24);
+        metrics = this.getFontMetrics(font);
+
         setBackground(Color.cyan);
         setPreferredSize(new Dimension(Game.PWIDTH, Game.PHEIGHT));
 
@@ -47,6 +54,8 @@ public class GamePanel extends JPanel {
         // clear the background
         dbg.setColor(Color.cyan);
         dbg.fillRect(0, 0, Game.PWIDTH, Game.PHEIGHT);
+
+        drawScore(Game.SCORE);
 
         for(Ball ball : Game.unitList) {
             drawBall(ball.getX(), ball.getY(), ball.getRadius());
@@ -73,6 +82,15 @@ public class GamePanel extends JPanel {
         dbg.setColor(Color.RED);
         dbg.fillOval((int) (ballX - ballRadius), (int) (ballY - ballRadius),
                 (int) (2 * ballRadius), (int) (2 * ballRadius));
+    }
+
+    public void drawScore(int score)
+    {
+        dbg.setColor(Color.blue);
+        dbg.setFont(font);
+
+        dbg.drawString("Score: " + score, 20, 25);
+        //dbg.drawString("Ball Position: " + ball.getX() + ", " + ball.getY(), 20, 50);
     }
 
 }

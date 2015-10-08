@@ -21,6 +21,8 @@ public class Game implements Runnable {
 
     public static ArrayList<Ball> unitList;    // temp ball list
 
+    public static int SCORE = 0;
+
     public Game()
     {
         unitList = new ArrayList<Ball>();
@@ -88,6 +90,8 @@ public class Game implements Runnable {
                 if (ball.hit(e.getX(), e.getY())) {   // was mouse press near the head?
                     //gameOver = true;
                     // hack together a score
+                    SCORE += 100;
+
                     System.out.println("Hit!");
                 }
             }
